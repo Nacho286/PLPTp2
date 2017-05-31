@@ -35,3 +35,9 @@ posible([X|XS],L):-cantRepeticiones(X,[X|XS],N),cantRepeticiones(X,L,M),N=<M,0<N
 %configuracion(+M, ?Conf, ?P, ?C)
 configuracion(M,binaria(X,Y),P,C):- aLista(binaria(X,Y),L),posible(L,M),composicion(binaria(X,Y),PC,CC), P is PC, C is CC.
 configuracion(M,jerarquica(X,Y),P,C):- aLista(jerarquica(X,Y),L),posible(L,M),composicion(jerarquica(X,Y),PC,CC), P is PC, C is CC.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%MasPoderoso
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%masPoderosa(+M1,+M2)
+masPoderosa(M1,M2):- configuracion(M1,Conf,P,C),not(configuracion(M2,Conf2,P2,C2),P<P2).
