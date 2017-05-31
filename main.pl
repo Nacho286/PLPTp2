@@ -33,6 +33,8 @@ posible([],_).
 posible([X|XS],L):-cantRepeticiones(X,[X|XS],N),cantRepeticiones(X,L,M),N=<M,0<N,posible(XS,L).
 
 %configuracion(+M, ?Conf, ?P, ?C)
+%configuracion(M,Conf,P,C):- not(ground(Conf)),length(M,N),between(1,N,I),aLista(Conf,L),length(L,I),posible(L,M),composicion(binaria(X,Y),PC,CC), P is PC, C is CC.
+%configuracion(M,Conf,P,C):- aLista(Conf,L),posible(L,M),composicion(Conf,PC,CC), P is PC, C is CC.
 configuracion(M,binaria(X,Y),P,C):- aLista(binaria(X,Y),L),posible(L,M),composicion(binaria(X,Y),PC,CC), P is PC, C is CC.
 configuracion(M,jerarquica(X,Y),P,C):- aLista(jerarquica(X,Y),L),posible(L,M),composicion(jerarquica(X,Y),PC,CC), P is PC, C is CC.
 
