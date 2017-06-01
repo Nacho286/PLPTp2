@@ -30,7 +30,7 @@ cantRepeticiones(X,[X|L],N):-!, cantRepeticiones(X,L,M),N is M+1.
 cantRepeticiones(X,[_|L],N):- cantRepeticiones(X,L,N).
 
 posible([],_).
-posible([X|XS],L):-cantRepeticiones(X,[X|XS],N),cantRepeticiones(X,L,M),0<N,N=M,posible(XS,L).
+posible([X|XS],L):-cantRepeticiones(X,[X|XS],N),cantRepeticiones(X,L,M),0<N,N=<M,posible(XS,L).
 
 %configuracion(+M, ?Conf, ?P, ?C)
 %configuracion(M,Conf,P,C):- not(ground(Conf)),length(M,N),between(1,N,I),aLista(Conf,L),length(L,I),posible(L,M),composicion(Conf,PC,CC), P is PC, C is CC.
