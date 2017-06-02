@@ -43,3 +43,9 @@ configuracion(M,jerarquica(X,Y),P,C):- aLista(jerarquica(X,Y),L),posible(L,M),co
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %masPoderosa(+M1,+M2)
 %masPoderosa(M1,M2):- configuracion(M1,Conf,P,C),not(configuracion(M2,Conf2,P2,C2),P<P2).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Mejor
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%mejor(+M1,+M2)
+mejor(M1,M2):- not(configuracion(M2,Conf,P,C), not(configuracion(M1,Conf,PP,CC), P > PP, CC > C ).
