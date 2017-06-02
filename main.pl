@@ -19,8 +19,8 @@ composicion(jerarquica(X,Y),P,C) :- composicion(X,PX,CX), composicion(Y,PY,CY), 
 %Configuracion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-aLista(binaria(X,Y),L):- herramienta(X,_), herramienta(Y,_), L = [X,Y].
-aLista(jerarquica(X,Y),L):- herramienta(X,_), herramienta(Y,_), L = [X,Y].
+aLista(binaria(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],[Y,X]]).
+aLista(jerarquica(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],[Y,X]]).
 aLista(jerarquica(X,Y),L):- herramienta(X,_), aLista(Y,LY), append([X],LY,L).
 aLista(jerarquica(X,Y),L):- herramienta(Y,_), aLista(X,LX), append([Y],LX,L).
 aLista(jerarquica(X,Y),L):- aLista(X,LX), aLista(Y,LY), append(LX,LY,L).
@@ -29,14 +29,17 @@ cantRepeticiones(_,[],0 ).
 cantRepeticiones(X,[X|L],N):-!, cantRepeticiones(X,L,M),N is M+1.
 cantRepeticiones(X,[_|L],N):- cantRepeticiones(X,L,N).
 
-posible([],_).
-posible([X|XS],L):-cantRepeticiones(X,[X|XS],N),cantRepeticiones(X,L,M),0<N,N=M,posible(XS,L).
+
+posible(XS,L):-length(XS,M),length(L,N),M=N,forall(member(X,XS),(cantRepeticiones(X,XS,I),cantRepeticiones(X,L,J),I=J)).
+% posible([],_).
+% posible([X|XS],L):-cantRepeticiones(X,[X|XS],N),cantRepeticiones(X,L,M),0<N,N=<M,posible(XS,L).
 
 %configuracion(+M, ?Conf, ?P, ?C)
 %configuracion(M,Conf,P,C):- not(ground(Conf)),length(M,N),between(1,N,I),aLista(Conf,L),length(L,I),posible(L,M),composicion(Conf,PC,CC), P is PC, C is CC.
 %configuracion(M,Conf,P,C):- aLista(Conf,L),posible(L,M),composicion(Conf,PC,CC), P is PC, C is CC.
-configuracion(M,binaria(X,Y),P,C):- aLista(binaria(X,Y),L),posible(L,M),composicion(binaria(X,Y),PC,CC), P is PC, C is CC.
-configuracion(M,jerarquica(X,Y),P,C):- aLista(jerarquica(X,Y),L),posible(L,M),composicion(jerarquica(X,Y),PC,CC), P is PC, C is CC.
+% configuracion(M,binaria(X,Y),P,C):- posible(L,M),aLista(binaria(X,Y),L),composicion(binaria(X,Y),PC,CC), P is PC, C is CC.
+% configuracion(M,jerarquica(X,Y),P,C):-posible(L,M), aLista(jerarquica(X,Y),L),composicion(jerarquica(X,Y),PC,CC), P is PC, C is CC.
+configuracion(M,Conf,P,C):-aLista(Conf,M), composicion(Conf,PC,CC), P is PC, C is CC.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %MasPoderoso
