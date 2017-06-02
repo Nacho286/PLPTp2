@@ -51,4 +51,4 @@ configuracion(M,Conf,P,C):-aLista(Conf,M), composicion(Conf,PC,CC), P is PC, C i
 %Mejor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %mejor(+M1,+M2)
-mejor(M1,M2):- not(configuracion(M2,Conf,P,C), not(configuracion(M1,Conf,PP,CC), P > PP, CC > C ).
+mejor(M1,M2):- not(configuracion(M2,Conf,P,C), not(configuracion(M1,Conf,PP,CC), (PP > P, C > CC)) ).
