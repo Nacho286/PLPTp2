@@ -24,10 +24,12 @@ aLista(jerarquica(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],
 aLista(jerarquica(X,Y),L):- herramienta(X,_), append([X],LY,S), permutation(L,S) , aLista(Y,LY) .
 aLista(jerarquica(X,Y),L):- herramienta(Y,_), append([Y],LX,S), permutation(L,S), aLista(X,LX) .
 
+%Dada una lista damos las posibles configuraciones que se arman con esa lista en el orden dado 
 aConf([X,Y],Conf):-herramienta(X,_),herramienta(Y,_),member(Conf,[binaria(X,Y),binaria(Y,X),jerarquica(X,Y),jerarquica(Y,X)]).
 aConf([X,Y,W,Z|XS],Conf):-aConf([W,Z|XS],Conf2),member(Conf,[jerarquica(binaria(X,Y),Conf2),jerarquica(binaria(Y,X),Conf2),jerarquica(Conf2,binaria(X,Y)),jerarquica(Conf2,binaria(Y,X))]).
 aConf([X|XS],Conf):-aConf(XS,Conf2),member(Conf,[jerarquica(Conf2,X),jerarquica(X,Conf2)]).
 
+%Dada una lista generarmos todas las configuraciones posibles
 allConf(M,Conf):- permutation(M,N),aConf(N,Conf).
 
 
@@ -104,6 +106,7 @@ subConj([_|XS], YS):- subConj(XS, YS).
 %Comprar
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%Genero todas las mochilas posibles de entre cierto tamaño
 allMochilas(0,[]).
 allMochilas(N,M1):- herramienta(Y,_),M2=[Y],L is N-1,L>=0,allMochilas(L,M3),append(M2,M3,M1).
 %comprar(+P,+C,?M)
