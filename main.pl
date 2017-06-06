@@ -19,11 +19,6 @@ composicion(jerarquica(X,Y),P,C) :- composicion(X,PX,CX), composicion(Y,PY,CY), 
 %Configuracion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-aLista(binaria(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],[Y,X]]).
-aLista(jerarquica(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],[Y,X]]).
-aLista(jerarquica(X,Y),L):- herramienta(X,_), append([X],LY,S), permutation(L,S) , aLista(Y,LY) .
-aLista(jerarquica(X,Y),L):- herramienta(Y,_), append([Y],LX,S), permutation(L,S), aLista(X,LX) .
-
 %Dada una lista damos las posibles configuraciones que se arman con esa lista en el orden dado 
 aConf([X,Y],Conf):-herramienta(X,_),herramienta(Y,_),member(Conf,[binaria(X,Y),binaria(Y,X),jerarquica(X,Y),jerarquica(Y,X)]).
 aConf([X,Y,W,Z|XS],Conf):-aConf([W,Z|XS],Conf2),member(Conf,[jerarquica(binaria(X,Y),Conf2),jerarquica(binaria(Y,X),Conf2),jerarquica(Conf2,binaria(X,Y)),jerarquica(Conf2,binaria(Y,X))]).
@@ -32,15 +27,9 @@ aConf([X|XS],Conf):-aConf(XS,Conf2),member(Conf,[jerarquica(Conf2,X),jerarquica(
 %Dada una lista generarmos todas las configuraciones posibles
 allConf(M,Conf):- permutation(M,N),aConf(N,Conf).
 
-
-cantRepeticiones(_,[],0 ).
-cantRepeticiones(X,[X|L],N):-!, cantRepeticiones(X,L,M),N is M+1.
-cantRepeticiones(X,[_|L],N):- cantRepeticiones(X,L,N).
-
-
-posible(XS,L):-length(XS,M),length(L,N),M=N,forall(member(X,XS),(cantRepeticiones(X,XS,I),cantRepeticiones(X,L,J),I=J)).
 %configuracion(+M, ?Conf, ?P, ?C)
 configuracion(M,Conf,P,C):- setof(Conf2,allConf(M,Conf2),Configs),member(Conf,Configs),composicion(Conf,PC,CC), P is PC, C is CC.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %MasPoderoso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,8 +68,6 @@ generarParticionMochila([],[]).
 generarParticionMochila(M3,[C|CS]) :- subConj(M3,C), C \= [], extraerConj(M3,C,M4), generarParticionMochila(M4,CS).
 
 
-%Estas teoricamente funcionan
-
 generarConfs([],[]).
 generarConfs([M|MS],[Conf|CS]) :- configuracion(M,Conf,_,_), generarConfs(MS,CS).
 
@@ -96,10 +83,6 @@ quitar(X,[Y|CS],[Y|C]) :- X \= Y, quitar(X,CS,C).
 subConj([], []).
 subConj([X|XS], [Y|YS]):- X = Y, subConj(XS, YS).
 subConj([_|XS], YS):- subConj(XS, YS).
-
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
