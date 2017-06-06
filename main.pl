@@ -50,7 +50,7 @@ masPoderosa(M1,M2):- configuracion(M1,_,P,_),not((configuracion(M2,_,P2,_),P<P2)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %mejor(+M1,+M2)
 mejor(M1,M2):- not((configuracion(M2,_,P,C), not((configuracion(M1,_,PP,CC), (PP >= P, C > CC))))).
-mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >= P, C > CC) ).	
+mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >= P, C > CC) ).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Usar
@@ -64,4 +64,4 @@ mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >=
 allMochilas(0,[]).
 allMochilas(N,M1):- herramienta(Y,_),M2=[Y],L is N-1,L>=0,allMochilas(L,M3),append(M2,M3,M1).
 %comprar(+P,+C,?M)
-comprar(P,C,M):-between(2,C,N),allMochilas(N,M), configuracion(M,_,PC,C),PC>=P.
+comprar(P,C,M):-between(2,C,N),allMochilas(N,M), configuracion(M,_,PC,_),PC>=P.
