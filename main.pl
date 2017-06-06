@@ -49,8 +49,11 @@ masPoderosa(M1,M2):- configuracion(M1,_,P,_),not((configuracion(M2,_,P2,_),P<P2)
 %Mejor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %mejor(+M1,+M2)
+%Ejemplo1:mejor([volatilizador,volatilizador],[rayo,rayo,rayo]) = true
+%Ejemplo2:mejor([volatilizador,volatilizador],[rayo]) = true trivialmente por ser singleton.
+
 mejor(M1,M2):- not((configuracion(M2,_,P,C), not((configuracion(M1,_,PP,CC), (PP >= P, C > CC))))).
-mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >= P, C > CC) ).
+%mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >= P, C > CC) ).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Usar
