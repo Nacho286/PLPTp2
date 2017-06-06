@@ -58,7 +58,7 @@ posible(XS,L):-length(XS,M),length(L,N),M=N,forall(member(X,XS),(cantRepeticione
 % configuracion(M,binaria(X,Y),P,C):- posible(L,M),aLista(binaria(X,Y),L),composicion(binaria(X,Y),PC,CC), P is PC, C is CC.
 % configuracion(M,jerarquica(X,Y),P,C):-posible(L,M), aLista(jerarquica(X,Y),L),composicion(jerarquica(X,Y),PC,CC), P is PC, C is CC.
 %configuracion(M,Conf,P,C):-aLista(Conf,M), composicion(Conf,PC,CC), P is PC, C is CC.
-configuracion(M,Conf,P,C):- bagof(Conf2,allConf(M,Conf2),Configs),member(Conf,Configs),composicion(Conf,PC,CC), P is PC, C is CC.
+configuracion(M,Conf,P,C):- setof(Conf2,allConf(M,Conf2),Configs),member(Conf,Configs),composicion(Conf,PC,CC), P is PC, C is CC.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %MasPoderoso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
