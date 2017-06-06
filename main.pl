@@ -49,4 +49,5 @@ masPoderosa(M1,M2):- configuracion(M1,_,P,_),not((configuracion(M2,_,P2,_),P<P2)
 %Mejor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %mejor(+M1,+M2)
-mejor(M1,M2):- not( (configuracion(M2,Conf,P,C), (not((configuracion(M1,Conf,PP,CC), (PP >= P, C > CC))))) ).
+mejor(M1,M2):- not((configuracion(M2,_,P,C), not((configuracion(M1,_,PP,CC), (PP >= P, C > CC))))).
+mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >= P, C > CC) ).	
