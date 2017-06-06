@@ -26,11 +26,11 @@ aLista(jerarquica(X,Y),L):- herramienta(Y,_), aLista(X,LX), append([Y],LX,L).
 aLista(jerarquica(X,Y),L):- aLista(X,LX), aLista(Y,LY), append(LX,LY,L).
 
 aConf([X,Y],Conf):-herramienta(X,_),herramienta(Y,_),member(Conf,[binaria(X,Y),binaria(Y,X),jerarquica(X,Y),jerarquica(Y,X)]).
+aConf([X,Y,W,Z|XS],Conf):-aConf([W,Z|XS],Conf2),member(Conf,[jerarquica(binaria(X,Y),Conf2),jerarquica(binaria(Y,X),Conf2),jerarquica(Conf2,binaria(X,Y)),jerarquica(Conf2,binaria(Y,X))]).
 aConf([X|XS],Conf):-aConf(XS,Conf2),member(Conf,[jerarquica(Conf2,X),jerarquica(X,Conf2)]).
-%aConf([X,Y:XS],Conf):-aConf(XS,Conf2),member(Conf,[jerarquica(binaria(X,Y),Conf2),jerarquica(binaria(Y,X),Conf2),jerarquica(Conf2,binaria(X,Y)),jerarquica(Conf2,binaria(Y,X)),jerarquica(X,jerarquica(Y,Conf2)),jerarquica(jerarquica(Y,Conf2),X)]).
-%aConf([X:XS],Conf):-aConf(XS,Conf2),member(Conf,[jerarquica(X,Conf2),jerarquica(Conf2,X)]).
 
 allConf(M,Conf):- permutation(M,N),aConf(N,Conf).
+%setConf(M,Conf):- member(Conf,)
 
 cantRepeticiones(_,[],0 ).
 cantRepeticiones(X,[X|L],N):-!, cantRepeticiones(X,L,M),N is M+1.
