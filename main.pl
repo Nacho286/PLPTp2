@@ -43,6 +43,10 @@ configuracion(M,Conf,P,C):- setof(Conf2,allConf(M,Conf2),Configs),member(Conf,Co
 %MasPoderoso
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %masPoderosa(+M1,+M2)
+%Ejemplo1: masPoderosa([volatilizador,volatilizador,rayo],[volatilizador,rayo,rayo]) = true
+%Ejemplo2: masPoderosa([volatilizador,volatilizador,rayo],[rayo,rayo,rayo]) = true
+%Ejemplo2: masPoderosa([volatilizador,volatilizador,rayo],[volatilizador,volatilizador,volatilizador]) = false
+
 masPoderosa(M1,M2):- configuracion(M1,_,P,_),not((configuracion(M2,_,P2,_),P<P2)),!.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
