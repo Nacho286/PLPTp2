@@ -19,11 +19,22 @@ composicion(jerarquica(X,Y),P,C) :- composicion(X,PX,CX), composicion(Y,PY,CY), 
 %Configuracion
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
+
 aLista(binaria(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],[Y,X]]).
 aLista(jerarquica(X,Y),L):- herramienta(X,_), herramienta(Y,_), member(L,[[X,Y],[Y,X]]).
-aLista(jerarquica(X,Y),L):- herramienta(X,_), aLista(Y,LY), append([X],LY,L).
-aLista(jerarquica(X,Y),L):- herramienta(Y,_), aLista(X,LX), append([Y],LX,L).
-aLista(jerarquica(X,Y),L):- aLista(X,LX), aLista(Y,LY), append(LX,LY,L).
+aLista(jerarquica(X,Y),L):- herramienta(X,_), append([X],LY,S), permutation(L,S) , aLista(Y,LY) .
+aLista(jerarquica(X,Y),L):- herramienta(Y,_), append([Y],LX,S), permutation(L,S), aLista(X,LX) .
+%aLista(jerarquica(X,Y),L):- aLista(X,LX), aLista(Y,LY), append(LX,LY,L).
+
+
+
+
+
+
+
+
 
 aConf([X,Y],Conf):-herramienta(X,_),herramienta(Y,_),member(Conf,[binaria(X,Y),binaria(Y,X),jerarquica(X,Y),jerarquica(Y,X)]).
 aConf([X|XS],Conf):-aConf(XS,Conf2),member(Conf,[jerarquica(Conf2,X),jerarquica(X,Conf2)]).
