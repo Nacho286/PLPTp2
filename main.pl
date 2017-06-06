@@ -66,6 +66,11 @@ mejor(M1,M2):- not((configuracion(M2,_,P,C), not((configuracion(M1,_,PP,CC), (PP
 usar(M1,Ps,Cs,M2) :-  subConj(M1,M2), extraerConj(M1,M2,M3), usarReducida(Ps,M3,Cs).
 
 
+%Le saco lo que no voy a usar y trabajo con esa mochila. 
+%Me quedo con todas las posibles formas de particionar a esa mochila reducida en tantos subconjuntos como potenciales haya.
+%Dada la lista de un posible particion de mochila, armo una onfiguraciones por cada una de ellas,
+%Finalmente, pruebo si esa lista hace que se verifiquen los potenciales. 
+%Backtracking despues...
 usarReducida(Ps,M3,Cs) :- generarParticionMochila(M3,PM), length(PM,N), length(Ps,N), generarConfs(PM,Cs),  verificanPotencial(Ps,Cs).
 
 generarParticionMochila([],[]).
