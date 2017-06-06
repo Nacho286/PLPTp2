@@ -49,5 +49,18 @@ masPoderosa(M1,M2):- configuracion(M1,_,P,_),not((configuracion(M2,_,P2,_),P<P2)
 %Mejor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %mejor(+M1,+M2)
-mejor(M1,M2):- not((configuracion(M2,_,P,C), not((configuracion(M1,_,PP,CC), (PP >= P, C > CC))))).
-mejor2(M1,M2):- forall(configuracion(M2,_,P,C), (configuracion(M1,_,PP,CC),PP >= P, C > CC) ).	
+mejor(M1,M2):- not((configuracion(M2,Conf,P,C), not(configuracion(M1,Conf,PP,CC), (PP > P, C > CC)) )).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Usar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%usar(+M1,+Ps,?Cs,?M2)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Comprar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+allMochilas(0,[]).
+allMochilas(N,M1):- herramienta(Y,_),M2=[Y],L is N-1,L>=0,allMochilas(L,M3),append(M2,M3,M1).
+%comprar(+P,+C,?M)
+comprar(P,C,M):-setof(M,allMochilas(C,M),Mochilas),member(X,Mochilas), configuracion(X,_,PC,C),PC>=P.
