@@ -63,6 +63,37 @@ mejor(M1,M2):- not((configuracion(M2,_,P,C), not((configuracion(M1,_,PP,CC), (PP
 %Usar
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %usar(+M1,+Ps,?Cs,?M2)
+usar(M1,Ps,Cs,M2) :-  subConj(M1,M2), extraerConj(M1,M2,M3), usarReducida(Ps,M3,Cs).
+
+
+usarReducida(Ps,M3,Cs) :- generarParticionMochila(M3,PM), length(PM,N), length(Ps,N), generarConfs(PM,Cs),  verificanPotencial(Ps,Cs).
+
+generarParticionMochila([],[]).
+generarParticionMochila(M3,[C|CS]) :- subConj(M3,C), C \= [], extraerConj(M3,C,M4), generarParticionMochila(M4,CS).
+
+
+%Estas teoricamente funcionan
+
+generarConfs([],[]).
+generarConfs([M|MS],[Conf|CS]) :- configuracion(M,Conf,_,_), generarConfs(MS,CS).
+
+verificanPotencial([],[]).
+verificanPotencial([P|PS],[C|CS]) :- length(PS,N), length(CS,N), composicion(C,PP,_), PP >= P, verificanPotencial(PS,CS).
+
+extraerConj(M1,[],M1).
+extraerConj(M1,[X|XS],M3) :-  extraerConj(M1,XS,C),  quitar(X,C,M3).
+
+quitar(X,[X|CS],CS).
+quitar(X,[Y|CS],[Y|C]) :- X \= Y, quitar(X,CS,C). 
+
+subConj([], []).
+subConj([X|XS], [Y|YS]):- X = Y, subConj(XS, YS).
+subConj([_|XS], YS):- subConj(XS, YS).
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Comprar
